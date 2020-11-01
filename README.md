@@ -10,7 +10,7 @@ Also known as the 6 Handshakes rule. As a result, a chain of "a friend of a frie
 Firstly, we are going to build the graph, where we will be implementing our algorithms, to simulate the theory of six dregee separation. The data used to construct the
 graph comes from this date base -> [[http://imdb.com/].
 
-First, task goes mainly to find how far two actors are connected, throughout the movies they have played.
+First task goes mainly to find how far two actors are connected, throughout the movies they have played.
 The idea behid this exercise, goes mainly in putting on practice the knowledge acquired of the various algorithms, learned for graphs.
 
 For the first task we are interested in findin the closesth path from one actor to another actor throughout the movies they both have played at.
