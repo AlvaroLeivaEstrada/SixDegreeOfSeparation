@@ -13,7 +13,7 @@ graph comes from this date base -> [[http://imdb.com/].
 First task goes mainly to find how far two actors are connected, throughout the movies they have played.
 The idea behid this exercise, goes mainly in putting on practice the knowledge acquired of the various algorithms, learned for graphs.
 
-For the first task we are interested in findin the closesth path from one actor to another actor throughout the movies they both have played at.
+For the first task we are interested it onn findinig the minnimun steps we need to give from one actor to another actor throughout the movies they both have played at.
 We know that there might be two differnt algorithms, that can traverse the graph, these two are: DFS and BFS. We go for the implementation of BFS. Which indeed gives 
 a time complexity of O(|V|+|E|).
 
