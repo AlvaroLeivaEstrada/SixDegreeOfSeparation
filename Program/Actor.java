@@ -1,90 +1,74 @@
 package Program;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.PriorityQueue;
+
 
 public class Actor {
 
 	private String id;
+	private Double distance;
 	private String name;
 	private List<Movie> moviesPlayedIn;
-	private boolean visited;
-	private Actor secondActor;
-	private Movie connectionMovie;
-	private PriorityQueue<Movie> priorityQueue;
+	private HashMap<String, Movie>mapOfMovies;
+	private StringBuffer builStringBuffer;
+	private static final Double MAX=99999999.9;
 
 	public Actor(String id, String name) {
 		this.id = id;
 		this.name = name;
-		visited = false;
-		secondActor = null;
-		connectionMovie = null;
-		priorityQueue = new PriorityQueue<Movie>();
+		builStringBuffer=new StringBuffer();
+		mapOfMovies=new HashMap<String, Movie>();
 		moviesPlayedIn = new LinkedList<Movie>();
+		distance=MAX;
 	}
-
-	public void setMovie(Movie movie) {
-		moviesPlayedIn.add(movie);
-		movie.setActorToFilm(this);
-		setRecommendedFilm(movie);
-	}
-
-	private void setRecommendedFilm(Movie movie) {
-		priorityQueue.offer(movie);
-	}
-
-	public void chillesteVei(String secondActor, String connectedActor) {
-		this.setVisited();
-		String sixDegree = "There is no relation between those actors";
-		while (!priorityQueue.isEmpty()) {
-			Movie film = priorityQueue.poll();
-			sixDegree = film.seekDeeperIntoTheGraph(secondActor, this.toString() + "\n" + film.toString());
-			if (!sixDegree.equals("There is no relation between those actors")) {
-				break;
-			}
-		}
-	}
-
-	public String bFSImplementation(String secondActor, String connectedActor) {
-		this.setVisited();
-		String sixDegree = "There is no relation between those actors";
-		for (Movie movie : moviesPlayedIn) {
-			if ((this.secondActor = movie.getActor(secondActor)) != null) {
-				connectionMovie = movie;
-				break;
-			}
-		}
-		if (this.secondActor != null) {
-			sixDegree = connectedActor + "\n" + connectionMovie.toString() + " " + secondActor.toString();
-			return sixDegree;
-		}
-
-		for (Movie movie : moviesPlayedIn) {
-			sixDegree = movie.seekDeeperIntoTheGraph(secondActor, this.toString() + "\n" + movie.toString());
-			if (!sixDegree.equals("There is no relation between those actors")) {
-				break;
-			}
-		}
-
-		return sixDegree;
-
-	}
-
-	public void setVisited() {
-		visited = true;
-	}
-
-	public boolean getVisited() {
-		return visited;
-	}
+	
 
 	public String getId() {
 		return id;
 	}
 
+
 	public void setId(String id) {
 		this.id = id;
+	}
+
+
+	public Double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(Double distance) {
+		this.distance = distance;
+	}
+
+	public void setMovie(Movie movie) {
+		moviesPlayedIn.add(movie);
+		movie.setActorToFilm(this);
+		mapOfMovies.put(movie.getNavn(), movie);
+	}
+	public void setPath(String path) {
+		builStringBuffer.append(path);
+	}
+	public StringBuffer getPath() {
+		return builStringBuffer;
+	}
+	
+	public List<Movie> getMoviesPlayedIn() {
+		return moviesPlayedIn;
+	}
+
+	public void setMoviesPlayedIn(List<Movie> moviesPlayedIn) {
+		this.moviesPlayedIn = moviesPlayedIn;
+	}
+
+	public HashMap<String, Movie> getMapOfMovies() {
+		return mapOfMovies;
+	}
+
+	public void setMapOfMovies(HashMap<String, Movie> mapOfMovies) {
+		this.mapOfMovies = mapOfMovies;
 	}
 
 	public String getName() {
@@ -103,5 +87,6 @@ public class Actor {
 	public String toString() {
 		return name;
 	}
+
 
 }

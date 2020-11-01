@@ -1,56 +1,43 @@
 package Program;
 
-import java.util.HashMap;
-import java.util.Optional;
-import java.util.Set;
 
-public class Movie implements Comparable<Movie>{
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
+
+public class Movie{
 	private String id;
 	private String navn;
 	private String rating;
 	private String antallStemer;
-	private HashMap<String, Actor> actorsPlayedAtThisMovie;
+	private List<Actor> actorsPlayedAtThisMovie;
+	private HashMap<String,Actor>mapOfActors;
 	
-	public Movie(String id) {
-		this.id=id;
-	}
+	
 	
 	public Movie(String id,String navn,String rating,String aS) {
 		this.id=id;
 		this.navn=navn;
 		this.rating=rating;
 		aS=antallStemer;
-		actorsPlayedAtThisMovie=new HashMap<String, Actor>();
+		actorsPlayedAtThisMovie=new LinkedList<Actor>();
+		mapOfActors=new HashMap<String, Actor>();
 	}
 	public void setActorToFilm(Actor actor) {
-		actorsPlayedAtThisMovie.put(actor.getName(),actor);
+		actorsPlayedAtThisMovie.add(actor);
+		mapOfActors.put(actor.getName(), actor);
 	}
 	
-	public String seekDeeperIntoTheGraph(String seekingActor,String connectedActor) {
-		Set<String> actorsInTheMovie = actorsPlayedAtThisMovie.keySet();
-		Actor currentActor=null;
-		String sixDegreeofSeparation="";
-		for (String actorName : actorsInTheMovie) {
-			currentActor=actorsPlayedAtThisMovie.get(actorName);
-			if (!currentActor.getVisited()) {
-				sixDegreeofSeparation=currentActor.bFSImplementation(seekingActor,connectedActor);		
-			}
-			if(!sixDegreeofSeparation.equals("There is no relation between those actors")) break;
-				
-		}
-		return sixDegreeofSeparation;
+	
+	public HashMap<String, Actor> getMapOfActors() {
+		return mapOfActors;
 	}
 
-	@Override
-	public int compareTo(Movie o) {
-		if(Double.parseDouble(this.rating) > Double.parseDouble(o.getRating())) {
-			return -1;
-		}else if(Double.parseDouble(this.rating) < Double.parseDouble(o.getRating())) {
-			return 1;
-		}
-		return 0;
+	public void setMapOfActors(HashMap<String, Actor> mapOfActors) {
+		this.mapOfActors = mapOfActors;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
@@ -63,8 +50,8 @@ public class Movie implements Comparable<Movie>{
 	public void setNavn(String navn) {
 		this.navn = navn;
 	}
-	public String getRating() {
-		return rating;
+	public Double getRating() {
+		return 10.0-Double.parseDouble(rating);
 	}
 	public void setRating(String rating) {
 		this.rating = rating;
@@ -75,18 +62,13 @@ public class Movie implements Comparable<Movie>{
 	public void setAntallStemer(String antallStemer) {
 		this.antallStemer = antallStemer;
 	}
+
+	public List<Actor> getActorsPlayedAtThisMovie() {
+		return actorsPlayedAtThisMovie;
+	}
+
 	@Override
 	public String toString() {
-		return "=== " + navn + " (" + rating + ") ====>";
+		return "=== " + navn + " (" + rating + ") ====> ";
 	}
-	public Actor getActor(String name) {
-		Optional<Actor> optional = Optional.of(actorsPlayedAtThisMovie.get(name));
-		if (optional.isPresent()) return optional.get();
-		return null;
-	
-	}
-
-	
-	
-
 }
